@@ -3,7 +3,6 @@ package main
 
 import (
 	"crypto/tls"
-
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,8 +11,7 @@ import (
 
 func main() {
 	Transport := &http.Transport{
-		TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
-		DisableCompression: true,
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: Transport}
 	urlValues := url.Values{}
@@ -25,11 +23,8 @@ func main() {
 		log.Print(err)
 	} else {
 		defer response.Body.Close()
-		log.Print(response.Header)
+		//log.Print(response.Header)
 		ioresp, _ := ioutil.ReadAll(response.Body)
-
-		log.Print(ioresp)
-		log.Print(response.ContentLength)
-		//log.Print(response.Body)
+		log.Print(string(ioresp))
 	}
 }
