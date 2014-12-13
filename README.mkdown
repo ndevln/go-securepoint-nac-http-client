@@ -2,13 +2,16 @@
 
 ## Intro
 Go program for autologin and login refresh for Securepoint Network Access Controler (NAC). [Like this one.](http://www.securepoint.cc/products-wifi-network-access-controller.html)
+
 ![Securepoint](http://www.securepoint.cc/images/securepoint-logo.jpg)
 
 ## Behavior of Securepoint NAC
 The NAC has a web login page, which is served by the DNS server of the NAC. The Login page url is normally https://controller.mobile.lan/ and the page communicates with the the php skript: https://controller.mobile.lan/portal_api.php. There are 3 instructions:
+
 * authenticate
 * disconnect
 * refresh
+
 In my case the refresh instruction was turned off. Since it is a german appliance you will bes disconnected at least every 24h. In Germany you get disconnected every 24h without any reason, it's a cultural thing.
 
 ## Usage
