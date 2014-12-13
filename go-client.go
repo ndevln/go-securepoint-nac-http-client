@@ -70,13 +70,13 @@ func loadUserData(file string) LoginData {
 	// file: filename of config file
 	loginFile, fileErr := os.Open(file)
 	if fileErr != nil {
-		log.Print("Failed loading UserData:", fileErr)
+		log.Fatal("Failed loading UserData:", fileErr)
 	}
 	jsondec := json.NewDecoder(loginFile)
 	loginData := LoginData{}
 	err := jsondec.Decode(&loginData)
 	if err != nil {
-		log.Print("Failed decoding json:", err)
+		log.Fatal("Failed decoding json:", err)
 	}
 	return loginData
 }
