@@ -10,28 +10,41 @@ import (
 )
 
 func main() {
+	login := "ilg2.4.59"
+	password := "FWSKXFym"
+	passworddigest := "f76bbb94d649d9d5958882501eda86bac57842c3"
 
-	portalapi("authenticate")
-
+	log.Print("Disconnect started...")
+	log.Print(portalapi(login, password, passworddigest, "disconnect"))
+	log.Print("Connect started...")
+	log.Print(portalapi(login, password, passworddigest, "authenticate"))
 }
 
-func portalapi(action string) {
+func portalapi(login string, password string, pwddigest string, action string) string {
+	// login = username
+	// password = password
+	// pwdgigest = return value of connect, needed for disconnect (leave empty for connect)
+	// action = connect, disconnect or refresh
+
 	Transport := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: Transport}
-	urlValues := url.Values{}
-	urlValues.Set("login", "ilg2.4.59")
-	urlValues.Set("password", "FWSKXFym")
-	//urlValues.Set("action", "authenticate")
-	urlValues.Set("action", action)
-	urlValues.Set("password_digest", "f76bbb94d649d9d5958882501eda86bac57842c3")
+
+	urlValues := url.Values{
+		"login":           {login},
+		"password":        {password},
+		"password_digest": {pwddigest},
+		"action":          {action},
+	}
+
 	response, err := client.PostForm("https://controller.mobile.lan/portal_api.php", urlValues)
 	if err != nil {
 		log.Print(err)
+		return ""
 	} else {
 		defer response.Body.Close()
 		ioresp, _ := ioutil.ReadAll(response.Body)
-		log.Print(string(ioresp))
+		return string(ioresp)
 	}
 }
