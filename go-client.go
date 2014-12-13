@@ -1,8 +1,9 @@
-// go-client
+// go-securepoint-http-client
 package main
 
 import (
 	"crypto/tls"
+	"encoding/json"
 	"io"
 	"io/ioutil"
 	"log"
@@ -10,6 +11,12 @@ import (
 	"net/url"
 	"os"
 )
+
+type LoginData struct {
+	Login     string
+	Password  string
+	PwdDigest string
+}
 
 func main() {
 	// Setup Logfile
@@ -19,15 +26,15 @@ func main() {
 	}
 	multiLogger := io.MultiWriter(logfile, os.Stdout)
 	log.SetOutput(multiLogger)
-	// Login Data
-	login := "ilg2.4.59"
-	password := "FWSKXFym"
-	passworddigest := "f76bbb94d649d9d5958882501eda86bac57842c3"
-	//Calling the Portal Api
+
+	// Load UserData from login.conf (json format)
+	loginData := loadUserData("login.conf")
+
+	// Reconnect
 	log.Print("Disconnect started...")
-	log.Print(portalapi(login, password, passworddigest, "disconnect"))
+	log.Print(portalapi(loginData.Login, loginData.Password, loginData.PwdDigest, "disconnect"))
 	log.Print("Connect started...")
-	log.Print(portalapi(login, password, passworddigest, "authenticate"))
+	log.Print(portalapi(loginData.Login, loginData.Password, loginData.PwdDigest, "authenticate"))
 }
 
 func portalapi(login string, password string, pwddigest string, action string) string {
@@ -57,4 +64,19 @@ func portalapi(login string, password string, pwddigest string, action string) s
 		ioresp, _ := ioutil.ReadAll(response.Body)
 		return string(ioresp)
 	}
+}
+
+func loadUserData(file string) LoginData {
+	// file: filename of config file
+	loginFile, fileErr := os.Open(file)
+	if fileErr != nil {
+		log.Print("Failed loading UserData:", fileErr)
+	}
+	jsondec := json.NewDecoder(loginFile)
+	loginData := LoginData{}
+	err := jsondec.Decode(&loginData)
+	if err != nil {
+		log.Print("Failed decoding json:", err)
+	}
+	return loginData
 }
