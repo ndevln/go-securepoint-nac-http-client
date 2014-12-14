@@ -24,3 +24,5 @@ The login data is provided via a config file in json. Just rename login.conf.def
 ## Known NAC Bugs
 * There is a problem with Notebooks, when your ethernet card goes into energy saving mode your login session is lost
 * Sometimes the DNS Server of the NAC crashes and your are unable to log in. If you have a valid session open you can still open ip connections. Sadly the use of other DNS Server will be blocked by the NAC (DNS caching is possible, but should be set up in advance)
+
+Tested with: go version go1.2.1 linux/386
