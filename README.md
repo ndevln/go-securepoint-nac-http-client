@@ -5,6 +5,10 @@ Go program for autologin and login refresh for Securepoint Network Access Contro
 
 ![Securepoint](http://www.securepoint.cc/images/securepoint-logo.jpg)
 
+Picture probably see on your login page.
+
+I am not associated with Securepoint, but they have a github profile: https://github.com/Securepoint
+
 ## Behavior of Securepoint NAC
 The NAC has a web login page, which is served by the DNS server of the NAC. The Login page url is normally https://controller.mobile.lan/ and the page communicates with the the php skript: https://controller.mobile.lan/portal_api.php. There are 3 instructions:
 
