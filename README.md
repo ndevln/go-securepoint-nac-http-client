@@ -5,7 +5,7 @@ Go program for autologin and login refresh for Securepoint Network Access Contro
 
 ![Securepoint](http://www.securepoint.cc/images/securepoint-logo.jpg)
 
-Picture probably see on your login page.
+Picture you probably see on your login page.
 
 I am not associated with Securepoint, but they have a github profile: https://github.com/Securepoint
 
