@@ -1,5 +1,5 @@
 {
 	"Login" : "username",
 	"Password" : "password",
-	"PwdDigest" : "digest"
+	"PwdDigest" : ""
 }
